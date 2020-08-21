@@ -4,9 +4,7 @@ import json
 app = Flask(__name__)
 
 
-def data_access(country,status=None,type=None):
-    power_list= [{1: country},{2: country}]
-    return power_list
+
 
 @app.route('/power_plant')
 def power_plant():
