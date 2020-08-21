@@ -1,9 +1,0 @@
-MONGO:
-  URL: "mongodb://127.0.0.1:27017"
-
-DB: 'testdb'
-COLLECTION:
-  COUNTRY: 'countries'
-  PLANT: 'nuclear_power_plants'
-  TYPE: 'nuclear_reactor_type'
-  STATUS: 'power_plant_status_type'
