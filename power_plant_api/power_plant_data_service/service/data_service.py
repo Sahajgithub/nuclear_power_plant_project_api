@@ -61,3 +61,26 @@ class DataService:
                     result.append(dict)
                     ctr = ctr + 1
         return result
+
+    @staticmethod
+    def get_all_power_plants(limit):
+        ctr = 1
+        plants = PlantDataAccess.get_all_plants()
+        result = []
+        for plant in plants:
+            if ctr > limit:
+                break
+            if plant is not None:
+                country = CountryDataAccess.get_country(plant.country_code)
+                status = StatusDataAccess.get_status(plant.status_id)
+                plant_type = TypeDataAccess.get_plant_type(plant.type_id)
+                mapping = DataService.map(plant, country, status, plant_type)
+
+                dict = {}
+                for key, val in mapping.items():
+                    dict.update({key: val})
+                result.append(dict)
+                ctr = ctr + 1
+
+        return result
+

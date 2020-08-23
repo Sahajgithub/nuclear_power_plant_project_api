@@ -1,6 +1,6 @@
-from .service.connection_service import Connect
+from power_plant_data_service.service.connection_service import Connect
 Connect.connect()
-from .service.data_service import DataService
+from power_plant_data_service.service.data_service import DataService
 
 
 def power_plant_data(country=None, status=None, type=None, limit=10):
@@ -11,3 +11,14 @@ def power_plant_data(country=None, status=None, type=None, limit=10):
     condition.update({'PlantType': type})
     results = DataService.get_power_plants(condition, limit)
     return results
+
+
+def get_all_plants():
+
+    results = DataService.get_all_power_plants(limit=800)
+    # for plant in results:
+    #     print(plant)
+
+    return results
+
+
