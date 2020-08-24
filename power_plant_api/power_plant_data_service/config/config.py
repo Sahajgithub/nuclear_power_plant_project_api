@@ -7,7 +7,9 @@ class Config:
 
     def __init__(self, config_file):
 
-        path = os.path.dirname(os.path.realpath(__file__)) + '\\' + config_file
+        path = os.path.dirname(os.path.realpath(__file__)) + '/' + config_file
+        # print(os.path.dirname(os.path.realpath(__file__)))
+
         if config_file is None:
             raise Exception("None file cannot be passed")
 

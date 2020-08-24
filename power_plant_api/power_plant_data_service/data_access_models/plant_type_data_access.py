@@ -30,3 +30,15 @@ class TypeDataAccess:
                                    description=type_cursor['Description'])
         return plant_type
 
+    @staticmethod
+    def type_from_type_id(type_id):
+        config = Config.get_instance()
+        client = MongoClient.get_instance(config)
+        db = client[config['DB']]
+        collection = db[config['COLLECTION']['TYPE']]
+        cursor = collection.find_one({'Id': type_id})
+        if cursor is None:
+            # print({'Unknown': ['Unknown', 'Unknown']})
+            return {'Unknown': ['Unknown', 'Unknown']}
+        else:
+            return {type_id: [cursor['Type'], cursor['Description']]}

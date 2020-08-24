@@ -26,3 +26,15 @@ class StatusDataAccess:
         else:
             status = Status(status_id=status_cursor['_id'], status=status_cursor['Type'])
         return status
+
+    @staticmethod
+    def status_from_status_id(status_id):
+        config = Config.get_instance()
+        client = MongoClient.get_instance(config)
+        db = client[config['DB']]
+        collection = db[config['COLLECTION']['STATUS']]
+        cursor = collection.find_one({'Id': status_id})
+        if cursor is None:
+            return {'Unknown': 'Unknown'}
+        else:
+            return {status_id: cursor['Type']}

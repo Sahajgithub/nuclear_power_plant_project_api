@@ -1,6 +1,6 @@
 from flask import Flask, request
 import json
-from power_plant_data_service.plant_data import get_all_plants
+from power_plant_data_service.plant_data import power_plant_data
 
 app = Flask(__name__)
 
@@ -20,19 +20,9 @@ def sorted_plants_country():
     current_page=int(current_page)
     page_size=int(page_size)
 
-    newlist = sorted(get_all_plants(), key=lambda k: k['Country'])
+    newlist = sorted(power_plant_data(current_page, page_size), key=lambda k: k['Country'])
 
-    if(len(newlist)%page_size==0):
-        max_no_of_pages = len(newlist)/page_size
-    else:
-        max_no_of_pages = abs(len(newlist)/page_size)+1
-
-    if(current_page>max_no_of_pages):
-        return "not enough data"
-
-    skipped=(current_page-1)*page_size
-
-    power_plants = json.dumps(newlist[skipped:skipped+page_size])
+    power_plants = json.dumps(newlist, default=str)
     return power_plants
 
 

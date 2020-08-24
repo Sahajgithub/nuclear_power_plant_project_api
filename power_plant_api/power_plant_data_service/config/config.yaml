@@ -1,7 +1,7 @@
 MONGO:
   URL: "mongodb://127.0.0.1:27017"
 
-DB: 'testdb'
+DB: 'power_plant'
 COLLECTION:
   COUNTRY: 'countries'
   PLANT: 'nuclear_power_plants'

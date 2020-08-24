@@ -1,8 +1,7 @@
 from flask import Flask, request
 import json
-from power_plant_data_service.plant_data import power_plant_data
+from power_plant_data_service.plant_data import specific_power_plant_data
 
-# print(power_plant_data('india')[0])
 
 app = Flask(__name__)
 
@@ -17,7 +16,7 @@ def power_plant():
     if country is None:
         return "Provide a country"
 
-    power_plants = json.dumps(power_plant_data(country, status, type), indent=10)
+    power_plants = json.dumps(specific_power_plant_data(country, status, type), default=str)
 
     return power_plants
 

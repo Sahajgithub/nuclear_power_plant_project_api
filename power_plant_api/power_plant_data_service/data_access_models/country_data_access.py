@@ -30,6 +30,21 @@ class CountryDataAccess:
                               country=country_cursor['Name'])
         return country
 
+    @staticmethod
+    def country_from_code(country_code):
+        config = Config.get_instance()
+        client = MongoClient.get_instance(config)
+        db = client[config['DB']]
+        collection = db[config['COLLECTION']['COUNTRY']]
+        cursor = collection.find_one({'Code': country_code})
+
+        if cursor is None:
+            return {'Unknown': 'Unknown'}
+        else:
+            # print({country_code: cursor['Name']})
+            return {country_code: cursor['Name']}
+
+
 
 
 
