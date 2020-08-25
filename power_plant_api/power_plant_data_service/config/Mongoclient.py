@@ -1,5 +1,5 @@
 import pymongo
-from .config import Config
+from power_plant_data_service.config.config import Config
 
 
 class MongoClient:

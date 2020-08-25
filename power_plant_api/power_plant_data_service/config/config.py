@@ -1,5 +1,7 @@
 import yaml
 import os.path
+from errors.file_error import InvalidFileError, InvalidPathError, InvalidFormatError
+from errors.error_code import ErrorCode
 
 
 class Config:
@@ -8,20 +10,22 @@ class Config:
     def __init__(self, config_file):
 
         path = os.path.dirname(os.path.realpath(__file__)) + '/' + config_file
-        # print(os.path.dirname(os.path.realpath(__file__)))
 
         if config_file is None:
-            raise Exception("None file cannot be passed")
+            raise InvalidFileError(ErrorCode.INVALID_FILE, "None file cannot be passed")
 
         if os.path.isfile(path) is False:
-            raise Exception("File doesn't exist")
+            raise InvalidPathError(ErrorCode.INVALID_PATH, f"path {path} does not exist")
 
-        try:
-            with open(path) as yaml_file:
-                Config.instance = yaml.load(yaml_file, Loader=yaml.FullLoader)
+        file_extension = path.split('.')[-1]
 
-        except IOError:
-            raise Exception("Configuration file doesn't exist")
+        if file_extension != 'yaml':
+            raise InvalidFormatError(ErrorCode.INVALID_FORMAT, f"File passed in {file_extension} format")
+
+        with open(path) as yaml_file:
+            Config.instance = yaml.load(yaml_file, Loader=yaml.FullLoader)
+
+
 
     @staticmethod
     def get_instance(config=None):
